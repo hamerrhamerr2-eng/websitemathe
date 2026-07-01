@@ -15,7 +15,7 @@ const message = document.querySelector("#message");
 const steps = Array.from(document.querySelectorAll("#processSteps li"));
 
 let spinTimers = [];
-let stepTimer = null;
+let stepTimers = [];
 let currentCode = "";
 
 lengthInput.addEventListener("input", () => {
@@ -95,7 +95,7 @@ function spinCode(finalCode, allCharacters) {
 
       if (index === slots.length - 1) {
         spinTimers = [];
-        stopStepAnimation(true);
+        finishStepAnimation();
         message.textContent = "Code wurde zufällig generiert.";
         generateButton.disabled = false;
         copyButton.disabled = false;
@@ -113,25 +113,30 @@ function stopAllSpinners() {
 
 function startStepAnimation() {
   stopStepAnimation();
+  highlightStep(0);
 
-  let activeIndex = 0;
-  highlightStep(activeIndex);
+  steps.slice(1).forEach((_, index) => {
+    const timer = setTimeout(() => {
+      highlightStep(index + 1);
+    }, (index + 1) * 320);
 
-  stepTimer = setInterval(() => {
-    activeIndex = (activeIndex + 1) % steps.length;
-    highlightStep(activeIndex);
-  }, 360);
+    stepTimers.push(timer);
+  });
 }
 
-function stopStepAnimation(showAllDone = false) {
-  if (stepTimer) {
-    clearInterval(stepTimer);
-    stepTimer = null;
-  }
+function finishStepAnimation() {
+  clearStepTimers();
+  steps.forEach((step) => step.classList.add("active"));
+}
 
-  steps.forEach((step) => {
-    step.classList.toggle("active", showAllDone);
-  });
+function stopStepAnimation() {
+  clearStepTimers();
+  steps.forEach((step) => step.classList.remove("active"));
+}
+
+function clearStepTimers() {
+  stepTimers.forEach((timer) => clearTimeout(timer));
+  stepTimers = [];
 }
 
 function highlightStep(activeIndex) {
