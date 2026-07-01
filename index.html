@@ -38,7 +38,10 @@
       <div class="panel result-panel">
         <h2>Ergebnis</h2>
         <div class="code-box" aria-live="polite">
-          <code id="generatedCode">Klicke auf Generieren</code>
+          <div id="slotDisplay" class="slot-display" aria-label="Generierter Code">
+            <span class="placeholder">Klicke auf Generieren</span>
+          </div>
+          <code id="generatedCode" class="sr-only">Klicke auf Generieren</code>
         </div>
         <button id="copyButton" type="button" class="secondary">Kopieren</button>
       </div>
