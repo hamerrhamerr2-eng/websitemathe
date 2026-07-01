@@ -26,8 +26,8 @@ function generateCode() {
     .map(([, chars]) => chars);
 
   if (selectedGroups.length === 0) {
-    message.textContent = "Waehle mindestens eine Zeichenart aus.";
-    generatedCode.textContent = "Kein Zeichensatz gewaehlt";
+    message.textContent = "Wähle mindestens eine Zeichenart aus.";
+    generatedCode.textContent = "Kein Zeichensatz gewählt";
     return;
   }
 
@@ -45,7 +45,7 @@ function generateCode() {
 
   const finalCode = shuffle(characters).join("");
   generatedCode.textContent = finalCode;
-  message.textContent = "Code wurde zufaellig generiert.";
+  message.textContent = "Code wurde zufällig generiert.";
   animateSteps();
 }
 
