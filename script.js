@@ -15,6 +15,7 @@ const message = document.querySelector("#message");
 const steps = Array.from(document.querySelectorAll("#processSteps li"));
 
 let spinTimers = [];
+let stepTimer = null;
 let currentCode = "";
 
 lengthInput.addEventListener("input", () => {
@@ -31,6 +32,7 @@ function generateCode() {
 
   if (selectedGroups.length === 0) {
     stopAllSpinners();
+    stopStepAnimation();
     message.textContent = "Wähle mindestens eine Zeichenart aus.";
     generatedCode.textContent = "Kein Zeichensatz gewählt";
     slotDisplay.innerHTML = '<span class="placeholder">Kein Zeichensatz gewählt</span>';
@@ -56,7 +58,7 @@ function generateCode() {
   message.textContent = "Code wird generiert ...";
   generateButton.disabled = true;
   copyButton.disabled = true;
-  animateSteps();
+  startStepAnimation();
   spinCode(finalCode, allCharacters);
 }
 
@@ -93,6 +95,7 @@ function spinCode(finalCode, allCharacters) {
 
       if (index === slots.length - 1) {
         spinTimers = [];
+        stopStepAnimation(true);
         message.textContent = "Code wurde zufällig generiert.";
         generateButton.disabled = false;
         copyButton.disabled = false;
@@ -106,6 +109,35 @@ function stopAllSpinners() {
   spinTimers = [];
   generateButton.disabled = false;
   copyButton.disabled = false;
+}
+
+function startStepAnimation() {
+  stopStepAnimation();
+
+  let activeIndex = 0;
+  highlightStep(activeIndex);
+
+  stepTimer = setInterval(() => {
+    activeIndex = (activeIndex + 1) % steps.length;
+    highlightStep(activeIndex);
+  }, 360);
+}
+
+function stopStepAnimation(showAllDone = false) {
+  if (stepTimer) {
+    clearInterval(stepTimer);
+    stepTimer = null;
+  }
+
+  steps.forEach((step) => {
+    step.classList.toggle("active", showAllDone);
+  });
+}
+
+function highlightStep(activeIndex) {
+  steps.forEach((step, index) => {
+    step.classList.toggle("active", index === activeIndex);
+  });
 }
 
 function randomCharacter(characters) {
@@ -125,16 +157,6 @@ function shuffle(items) {
   }
 
   return result;
-}
-
-function animateSteps() {
-  steps.forEach((step) => step.classList.remove("active"));
-
-  steps.forEach((step, index) => {
-    setTimeout(() => {
-      step.classList.add("active");
-    }, index * 180);
-  });
 }
 
 async function copyCode() {
