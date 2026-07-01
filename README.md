@@ -1,14 +1,14 @@
 # Mathe Code Generator
 
-Eine kleine Website zur Codegenerierung fuer 12 bis 16 Zeichen.
+Eine kleine Website zur Codegenerierung für 12 bis 16 Zeichen.
 
 ## Funktionen
 
-- Laenge zwischen 12 und 16 Zeichen
-- Kleinbuchstaben, Grossbuchstaben, Zahlen und Sonderzeichen auswaehlbar
+- Länge zwischen 12 und 16 Zeichen
+- Kleinbuchstaben, Großbuchstaben, Zahlen und Sonderzeichen auswählbar
 - Zufallsgenerierung mit `crypto.getRandomValues`
-- Schritt-fuer-Schritt-Darstellung des Generierungsprozesses
-- Kopier-Button fuer den fertigen Code
+- Schritt-für-Schritt-Darstellung des Generierungsprozesses
+- Kopier-Button für den fertigen Code
 
 ## Render Einstellungen
 
