@@ -113,11 +113,11 @@ function stopAllSpinners() {
 
 function startStepAnimation() {
   stopStepAnimation();
-  highlightStep(0);
+  markStepsUpTo(0);
 
   steps.slice(1).forEach((_, index) => {
     const timer = setTimeout(() => {
-      highlightStep(index + 1);
+      markStepsUpTo(index + 1);
     }, (index + 1) * 320);
 
     stepTimers.push(timer);
@@ -126,7 +126,7 @@ function startStepAnimation() {
 
 function finishStepAnimation() {
   clearStepTimers();
-  steps.forEach((step) => step.classList.add("active"));
+  markStepsUpTo(steps.length - 1);
 }
 
 function stopStepAnimation() {
@@ -139,9 +139,9 @@ function clearStepTimers() {
   stepTimers = [];
 }
 
-function highlightStep(activeIndex) {
+function markStepsUpTo(activeIndex) {
   steps.forEach((step, index) => {
-    step.classList.toggle("active", index === activeIndex);
+    step.classList.toggle("active", index <= activeIndex);
   });
 }
 
